@@ -38,7 +38,7 @@ namespace StarChart.Controllers
                 }
                 else
                 {
-                    return NotFound("There is no celestial object with the given ID.");
+                    return NotFound();
                 }
             }
             catch (Exception)
@@ -52,20 +52,21 @@ namespace StarChart.Controllers
         {
             try
             {
-                var celestialObject = _context.CelestialObjects.Where(obj => obj.Name == name)
-                    .FirstOrDefault();
+                var celestialObjects = _context.CelestialObjects.Where(obj => obj.Name == name).ToList();
 
-                if (celestialObject != default(CelestialObject))
+                if (celestialObjects.Any())
                 {
-                    var satellites = _context.CelestialObjects.Where(obj => 
-                        obj.OrbitedObjectId == celestialObject.Id).ToList();
-                    celestialObject.Satellites = satellites;
+                    foreach (var obj in celestialObjects)
+                    {
+                        var satellites = _context.CelestialObjects.Where(el => el.OrbitedObjectId == obj.Id).ToList();
+                        obj.Satellites = satellites;
+                    }
 
-                    return Ok(celestialObject);
+                    return Ok(celestialObjects);
                 }
                 else
                 {
-                    return NotFound("There is no celestial object with the given Name.");
+                    return NotFound();
                 }
             }
             catch (Exception)
@@ -93,7 +94,7 @@ namespace StarChart.Controllers
                 }
                 else
                 {
-                    return NotFound("No celestial objects were found.");
+                    return NotFound();
                 }
                 
             }
