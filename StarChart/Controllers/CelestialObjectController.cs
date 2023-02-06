@@ -38,7 +38,7 @@ namespace StarChart.Controllers
                 }
                 else
                 {
-                    return NotFound("There is no celestial object with the given ID.")
+                    return NotFound("There is no celestial object with the given ID.");
                 }
             }
             catch (Exception)
@@ -65,7 +65,7 @@ namespace StarChart.Controllers
                 }
                 else
                 {
-                    return NotFound("There is no celestial object with the given Name.")
+                    return NotFound("There is no celestial object with the given Name.");
                 }
             }
             catch (Exception)
